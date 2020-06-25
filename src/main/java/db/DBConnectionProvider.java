@@ -33,7 +33,7 @@ public class DBConnectionProvider {
 
     private void loadProperties() throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("E:\\Projects\\TaskManagement\\src\\main\\resources\\config.properties"));
+        properties.load(new FileInputStream("E:\\Projects\\TaskManager\\src\\main\\resources\\config.properties"));
         driverName = properties.getProperty("db.driver.name");
         dbUrl = properties.getProperty("db.url");
         username = properties.getProperty("db.username");

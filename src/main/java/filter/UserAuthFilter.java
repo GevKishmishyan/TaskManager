@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/updateTaskStatus", "/userSearch", "/getTaskStatus", "/userHome",
-        "/addComment", "/replyComment", "/deleteComment", "/getTaskById", "/seenNot"
+        "/updateTaskStatus", "/userSearch", "/getTaskStatus", "/userHome"
 })
 public class UserAuthFilter implements Filter {
     @Override
