@@ -19,8 +19,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/managerProfile")
-public class ManagerProfileServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/userProfile")
+public class UserProfileServlet extends HttpServlet {
 
     private static final UserManager userManager = new UserManager();
     private static final TaskManager taskManager = new TaskManager();
@@ -48,9 +48,8 @@ public class ManagerProfileServlet extends HttpServlet {
             req.setAttribute("tasks", allTasks);
             req.setAttribute("usersByStatus", allUsersByStatus);
             req.setAttribute("allNots", allNotsByUser);
-            req.getRequestDispatcher("/WEB-INF/managerProfile.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/userProfile.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

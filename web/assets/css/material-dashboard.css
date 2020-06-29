@@ -1035,6 +1035,7 @@ pre code {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  margin-top: 10px;
 }
 
 .no-gutters {
@@ -17235,6 +17236,7 @@ label {
 .card .card-header {
   border-bottom: none;
   background: transparent;
+  margin-bottom: 20px;
 }
 
 .card .card-header .title {

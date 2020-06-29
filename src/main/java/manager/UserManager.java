@@ -84,20 +84,25 @@ public class UserManager {
         }
     }
 
-    public void updateUser(User user, int id) throws SQLException {
-        String query = "UPDATE users SET `name` = ?, surname = ?, email = ?, password = ?, gender = ?, age = ?, user_status = ? WHERE id = ?";
+    public void updateUser(String name, String surname, String email, int age, int id) throws SQLException {
+        String query = "UPDATE users SET `name` = ?, surname = ?, email = ?, age = ? WHERE id = ?";
         PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, user.getName());
-        ps.setString(2, user.getSurname());
-        ps.setString(3, user.getEmail());
-        ps.setString(4, user.getPassword());
-        ps.setString(5, user.getGender().name());
-        ps.setInt(6, user.getAge());
-        ps.setString(7, user.getUserStatus().name());
-        ps.setInt(8, id);
+        ps.setString(1, name);
+        ps.setString(2, surname);
+        ps.setString(3, email);
+        ps.setInt(4, age);
+        ps.setInt(5, id);
         ps.executeUpdate();
-        user.setId(id);
     }
+
+    public void updateUserProficePic(String profilePic, int id) throws SQLException {
+        String query = "UPDATE users SET prof_pic_url = ? WHERE id = ?";
+        PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, profilePic);
+        ps.setInt(2, id);
+        ps.executeUpdate();
+    }
+
 
 
     public User getUserByEmail(String email) throws SQLException {

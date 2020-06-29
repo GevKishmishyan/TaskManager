@@ -15,7 +15,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
-<body class="dark-edition">
+<body>
 <%
     User user = (User) session.getAttribute("user");
     List<User> users = (List<User>) request.getAttribute("users");
@@ -47,45 +47,33 @@
         <div class="sidebar-wrapper">
             <ul class="nav">
                 <li class="nav-item active  ">
-                    <a class="nav-link" href="./dashboard.html">
+                    <a class="nav-link" href="/managerHome">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/managerProfile">
+                    <a class="nav-link" href="/userProfile">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="./tables.html">
+                    <a class="nav-link" href="/managerGetUsersList">
                         <i class="material-icons">content_paste</i>
-                        <p>Table List</p>
+                        <p>Users List</p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="./typography.html">
+                    <a class="nav-link" href="/managerGetTasksList">
                         <i class="material-icons">library_books</i>
-                        <p>Typography</p>
+                        <p>Tasks List</p>
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="./icons.html">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Icons</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./map.html">
-                        <i class="material-icons">location_ons</i>
-                        <p>Maps</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./notifications.html">
-                        <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
+                    <a class="nav-link" href="/logout">
+                        <i class="material-icons">logout</i>
+                        <p>Log out</p>
                     </a>
                 </li>
             </ul>
