@@ -17,5 +17,8 @@ public class SessionListener implements HttpSessionAttributeListener {
         System.out.println("Session attribute deleted. - " + se.getName());
     }
 
+    @Override
+    public void attributeReplaced(HttpSessionBindingEvent se) {
 
+    }
 }

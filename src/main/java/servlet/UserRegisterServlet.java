@@ -24,7 +24,7 @@ import java.sql.SQLException;
 public class UserRegisterServlet extends HttpServlet {
 
     private static final UserManager userManager = new UserManager();
-    private static final String UPLOAD_DIR = "E:\\Projects\\TaskManagement\\uploads\\profilePics";
+    private static final String UPLOAD_DIR = "E:\\Projects\\TaskManager\\uploads\\profilePics";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -35,62 +35,35 @@ public class UserRegisterServlet extends HttpServlet {
         String gender = req.getParameter("gender");
         String age = req.getParameter("age");
         String userStatus = req.getParameter("userStatus");
-        StringBuilder msg = new StringBuilder();
-        if (name == null || name.length() == 0) {
-            msg.append("Name field is required.<br>");
-        }
-        if (surname == null || surname.length() == 0) {
-            msg.append("Surname field is required.<br>");
-        }
-        if (email == null || email.length() == 0) {
-            msg.append("Email field is required.<br>");
-        }
-        if (password == null || password.length() == 0) {
-            msg.append("Password field is required.<br>");
-        }
-        if (gender == null || gender.length() == 0) {
-            msg.append("Gender field is required.<br>");
-        }
-        if (age == null || age.length() == 0) {
-            msg.append("Age field is required.<br>");
-        }
-        if (userStatus == null || userStatus.length() == 0) {
-            msg.append("User Status field is required.<br>");
-        }
-        if (msg.toString().equals("")) {
-            try {
-                User user = User.builder()
-                        .name(name)
-                        .surname(surname)
-                        .email(email)
-                        .password(password)
-                        .gender(Gender.valueOf(gender))
-                        .age(Integer.parseInt(age))
-                        .userStatus(UserStatus.valueOf(userStatus))
-                        .build();
-                for (Part part : req.getParts()) {
-                    if (getFileName(part) != null) {
-                        String fileName = System.currentTimeMillis() + getFileName(part);
-                        String fullFileName = UPLOAD_DIR + File.separator + fileName;
-                        part.write(fullFileName);
-                        user.setProfPicUrl(fileName);
-                    }
+        String profilePic = req.getParameter("profilePic");
+
+        try {
+            User user = User.builder()
+                    .name(name)
+                    .surname(surname)
+                    .email(email)
+                    .password(password)
+                    .gender(Gender.valueOf(gender))
+                    .age(Integer.parseInt(age))
+                    .userStatus(UserStatus.valueOf(userStatus))
+                    .build();
+            for (Part part : req.getParts()) {
+                if (getFileName(part) != null) {
+                    String fileName = System.currentTimeMillis() + getFileName(part);
+                    String fullFileName = UPLOAD_DIR + File.separator + fileName;
+                    part.write(fullFileName);
+                    user.setProfPicUrl(fileName);
                 }
-                userManager.register(user);
-                req.getSession().setAttribute("userRegMsg", "User successfully registered.");
-                resp.sendRedirect("/managerHome");
-            } catch (SQLException | ExistingModelException | IOException | ServletException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
-                e.printStackTrace();
             }
-        } else {
-            req.getSession().setAttribute("userRegMsg", msg.toString());
-            try {
+            userManager.register(user);
+            req.getSession().setAttribute("message", "User successfully registered.");
+            if (req.getSession().getAttribute("user") == null) {
+                resp.sendRedirect("/");
+            } else {
                 resp.sendRedirect("/managerHome");
-            } catch (IOException ex) {
-//                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
-                ex.printStackTrace();
             }
+        } catch (SQLException | ExistingModelException | IOException | ServletException e) {
+            e.printStackTrace();
         }
     }
 

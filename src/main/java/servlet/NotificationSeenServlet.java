@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/seenNot")
-public class NotSeenServlet extends HttpServlet {
+public class NotificationSeenServlet extends HttpServlet {
 
     private static final NotificationManager notificationManager = new NotificationManager();
 

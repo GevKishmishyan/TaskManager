@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/deleteTask", "/addTask", "/deleteUser", "/getUserForUpdate", "/getTaskForUpdate", "/image",
-        "/managerHome", "/managerSearch", "/updateTask", "/updateUser", "/register",
+        "/deleteTask", "/addTask", "/deleteUser", "/getUserForUpdate", "/getTaskForUpdate",
+        "/managerHome", "/managerSearch", "/updateTask", "/updateUser"
 })
 public class ManagerAuthFilter implements Filter {
     @Override

@@ -15,18 +15,15 @@ public class DBConnectionProvider {
 
     private String driverName;
     private String dbUrl;
-    private String username;
-    private String password;
+    private String dbUsername;
+    private String dbPassword;
 
 
     private DBConnectionProvider() {
         try {
             loadProperties();
             Class.forName(driverName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -36,8 +33,8 @@ public class DBConnectionProvider {
         properties.load(new FileInputStream("E:\\Projects\\TaskManager\\src\\main\\resources\\config.properties"));
         driverName = properties.getProperty("db.driver.name");
         dbUrl = properties.getProperty("db.url");
-        username = properties.getProperty("db.username");
-        password = properties.getProperty("db.password");
+        dbUsername = properties.getProperty("db.username");
+        dbPassword = properties.getProperty("db.password");
     }
 
     public static DBConnectionProvider getInstance() {
@@ -47,11 +44,10 @@ public class DBConnectionProvider {
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection(dbUrl, username, password);
+                connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(1);
         }
         return connection;
     }
