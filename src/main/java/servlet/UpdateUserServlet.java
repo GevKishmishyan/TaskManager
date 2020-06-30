@@ -38,10 +38,9 @@ public class UpdateUserServlet extends HttpServlet {
                     .age(age)
                     .userStatus(userStatus)
                     .build();
-//            userManager.updateUser(user, id);
-            resp.sendRedirect("/managerHome");
-        } catch ( IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
+            userManager.managerUpdateUser(user, id);
+            resp.sendRedirect("/getUserForUpdate?id=" + id);
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

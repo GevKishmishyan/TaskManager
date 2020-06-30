@@ -70,7 +70,7 @@ public class DeleteUserServlet extends HttpServlet {
             }
 
             userManager.deleteUserByID(id);
-            resp.sendRedirect("/managerHome");
+            resp.sendRedirect("/managerGetUsersList");
         } catch (SQLException | IOException | ParseException e) {
 //            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
