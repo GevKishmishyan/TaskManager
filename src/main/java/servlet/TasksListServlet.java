@@ -31,11 +31,17 @@ public class TasksListServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
             List<User> allUsers = userManager.getAllUsers();
-            List<Task> allTasks = taskManager.getAllTasks();
             List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
+//            if (user.getUserStatus() != UserStatus.MANAGER) {
+//                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
+//            }
             User user = (User) req.getSession().getAttribute("user");
-            if (user.getUserStatus() != UserStatus.MANAGER) {
-                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
+            List<Task> allTasks = taskManager.getAllTasks();
+            if (user.getUserStatus() == UserStatus.MANAGER) {
+                req.setAttribute("tasks", allTasks);
+            } else {
+                List<Task> allUserTasks = taskManager.getAllTasksByUser(user);
+                req.setAttribute("tasks", allUserTasks);
             }
 
             List<Notification> allNotsByUser = new ArrayList<>();
@@ -46,7 +52,6 @@ public class TasksListServlet extends HttpServlet {
                 }
             }
             req.setAttribute("users", allUsers);
-            req.setAttribute("tasks", allTasks);
             req.setAttribute("usersByStatus", allUsersByStatus);
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/tasksList.jsp").forward(req, resp);

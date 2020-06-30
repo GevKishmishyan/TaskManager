@@ -189,6 +189,7 @@
 
 
 <div class="wrapper ">
+    <% if (user.getUserStatus() == UserStatus.MANAGER) { %>
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
 
         <div class="logo"><a href="/managerHome" class="simple-text logo-normal">
@@ -202,7 +203,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/userProfile">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
@@ -226,6 +227,40 @@
                         <p>Users List</p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/managerGetTasksList">
+                        <i class="material-icons">library_books</i>
+                        <p>Tasks List</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">
+                        <i class="material-icons">logout</i>
+                        <p>Log out</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+        <div class="logo"><a href="/userHome" class="simple-text logo-normal">
+            Task Management
+        </a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item   ">
+                    <a class="nav-link" href="/userHome">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/userProfile">
+                        <i class="material-icons">person</i>
+                        <p>Profile</p>
+                    </a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/managerGetTasksList">
                         <i class="material-icons">library_books</i>
@@ -241,6 +276,7 @@
             </ul>
         </div>
     </div>
+    <% } %>
     <div class="main-panel">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -507,7 +543,7 @@
                                                            style="text-align: right">
                                                             <% if (perComment.getAuthor().equals(user)) { %>
                                                             <a style="text-decoration: none; color: #FFFFFF; margin-left: 10px"
-                                                               href="/deleteComment?id=<%= comment.getId() %>">&#x2715;</a>
+                                                               href="/deleteComment?id=<%= perComment.getId() %>">&#x2715;</a>
                                                             <% } %>
                                                         </p>
                                                     </div>
@@ -569,6 +605,7 @@
                 </div>
                 <% }
                 } %>
+                <% if (commentsByTask.size() != 0) { %>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -597,6 +634,7 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
             </div>
         </div>
         <footer class="footer">

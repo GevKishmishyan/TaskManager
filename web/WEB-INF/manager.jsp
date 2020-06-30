@@ -99,9 +99,9 @@
                     <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/search" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="text" name="search" value="" class="form-control" placeholder="Search...">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>

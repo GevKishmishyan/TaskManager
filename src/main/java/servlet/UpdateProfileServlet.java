@@ -33,7 +33,7 @@ public class UpdateProfileServlet extends HttpServlet {
             req.getSession().removeAttribute("user");
             User userById = userManager.getUserById(id);
             req.getSession().setAttribute("user", userById);
-            resp.sendRedirect("/managerProfile");
+            resp.sendRedirect("/userProfile");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }

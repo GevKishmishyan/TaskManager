@@ -76,6 +76,7 @@
 
 %>
 <div class="wrapper ">
+    <% if (user.getUserStatus() == UserStatus.MANAGER) { %>
     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
 
         <div class="logo"><a href="/managerHome" class="simple-text logo-normal">
@@ -128,6 +129,41 @@
             </ul>
         </div>
     </div>
+    <% } else { %>
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+        <div class="logo"><a href="/userHome" class="simple-text logo-normal">
+            Task Management
+        </a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item   ">
+                    <a class="nav-link" href="/userHome">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/userProfile">
+                        <i class="material-icons">person</i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/managerGetTasksList">
+                        <i class="material-icons">library_books</i>
+                        <p>Tasks List</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">
+                        <i class="material-icons">logout</i>
+                        <p>Log out</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <% } %>
     <div class="main-panel">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -136,9 +172,9 @@
                     <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end">
-                    <form class="navbar-form">
+                    <form class="navbar-form" action="/search" method="post">
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+                            <input type="text" name="search" value="" class="form-control" placeholder="Search...">
                             <button type="submit" class="btn btn-default btn-round btn-just-icon">
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
@@ -155,7 +191,8 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
                                 <span class="notification">5</span>
                                 <p class="d-lg-none d-md-block">
@@ -243,17 +280,80 @@
                     <div class="col-md-4">
                         <div class="card card-profile">
                             <div class="card-avatar">
+                                <% if
+                                    (
+                                    user
+                                    .
+                                    getUserStatus
+                                    (
+                                    )
+                                    ==
+                                    UserStatus
+                                    .
+                                    MANAGER
+                                    )
+                                    { %>
                                 <a href="/managerHome">
-                                    <% if (!pattern.matcher(user.getProfPicUrl()).matches()) { %>
-                                    <% if (user.getGender() == Gender.MALE) { %>
-                                    <img class="img" src="/image?path=defMale.png" width="30px" alt="">
-                                    <% } else if (user.getGender() == Gender.FEMALE) { %>
-                                    <img class="img" src="/image?path=defFemale.png" width="30px" alt="">
-                                    <% }
-                                    } else { %>
-                                    <img class="img" src="/image?path=<%= user.getProfPicUrl() %>" width="30px" alt="">
-                                    <% } %>
-                                </a>
+                                        <% } else { %>
+                                    <a href="/userHome">
+                                        <% } %>
+                                        <% if
+                                            (
+                                            !
+                                            pattern
+                                            .
+                                            matcher
+                                            (
+                                            user
+                                            .
+                                            getProfPicUrl
+                                            (
+                                            )
+                                            )
+                                            .
+                                            matches
+                                            (
+                                            )
+                                            )
+                                            { %>
+                                        <% if
+                                            (
+                                            user
+                                            .
+                                            getGender
+                                            (
+                                            )
+                                            ==
+                                            Gender
+                                            .
+                                            MALE
+                                            )
+                                            { %>
+                                        <img class="img" src="/image?path=defMale.png" width="30px" alt="">
+                                        <% }
+                                            else
+                                            if
+                                            (
+                                            user
+                                            .
+                                            getGender
+                                            (
+                                            )
+                                            ==
+                                            Gender
+                                            .
+                                            FEMALE
+                                            )
+                                            { %>
+                                        <img class="img" src="/image?path=defFemale.png" width="30px" alt="">
+                                        <% }
+                                            }
+                                            else
+                                            { %>
+                                        <img class="img" src="/image?path=<%= user.getProfPicUrl() %>" width="30px"
+                                             alt="">
+                                        <% } %>
+                                    </a>
                             </div>
                             <div class="card-body">
                                 <form action="/updateProfilePic" method="post" enctype="multipart/form-data">
@@ -264,13 +364,26 @@
                                         </span>
                                     </label><br>
                                     <button type="submit" class="btn btn-primary">
-                                        Update Profile Picture</button>
+                                        Update Profile Picture
+                                    </button>
 
                                 </form>
                                 <br>
-                                <h6 class="card-category"><%= user.getUserStatus() %>
+                                <h6 class="card-category"><%= user
+                                    .
+                                    getUserStatus
+                                    (
+                                    ) %>
                                 </h6>
-                                <h4 class="card-title"><%= user.getName() %> <%= user.getSurname() %>
+                                <h4 class="card-title"><%= user
+                                    .
+                                    getName
+                                    (
+                                    ) %> <%= user
+                                    .
+                                    getSurname
+                                    (
+                                    ) %>
                                 </h4>
                                 <%--                                <p class="card-description">--%>
                                 <%--                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...--%>
