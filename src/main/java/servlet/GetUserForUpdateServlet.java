@@ -42,7 +42,6 @@ public class GetUserForUpdateServlet extends HttpServlet {
         try {
             req.getRequestDispatcher("/WEB-INF/updateUser.jsp").forward(req, resp);
         } catch (ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

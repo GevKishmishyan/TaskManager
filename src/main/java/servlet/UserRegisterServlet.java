@@ -59,7 +59,7 @@ public class UserRegisterServlet extends HttpServlet {
             if (req.getSession().getAttribute("user") == null) {
                 resp.sendRedirect("/");
             } else {
-                resp.sendRedirect("/managerHome");
+                resp.sendRedirect("/addNewUser");
             }
         } catch (SQLException | ExistingModelException | IOException | ServletException e) {
             e.printStackTrace();

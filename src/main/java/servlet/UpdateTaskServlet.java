@@ -24,7 +24,7 @@ public class UpdateTaskServlet extends HttpServlet {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)  {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String description = req.getParameter("description");
@@ -34,10 +34,10 @@ public class UpdateTaskServlet extends HttpServlet {
         String[] splitedDeadline = deadlineStr.split("T");
 
         try {
-        Date deadline = sdf.parse(splitedDeadline[0] + " " + splitedDeadline[1]);
+            Date deadline = sdf.parse(splitedDeadline[0] + " " + splitedDeadline[1]);
 
-        User assignedUser = userManager.getUserByEmail(assignedUserEmail);
-        User manager = (User) req.getSession().getAttribute("user");
+            User assignedUser = userManager.getUserByEmail(assignedUserEmail);
+            User manager = (User) req.getSession().getAttribute("user");
 
             Task task = Task.builder()
                     .name(name)
@@ -48,9 +48,8 @@ public class UpdateTaskServlet extends HttpServlet {
                     .author(manager)
                     .build();
             taskManager.updateTask(task, id);
-            resp.sendRedirect("/managerHome");
+            resp.sendRedirect("/getTaskForUpdate?id=" + id);
         } catch (SQLException | ParseException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
 

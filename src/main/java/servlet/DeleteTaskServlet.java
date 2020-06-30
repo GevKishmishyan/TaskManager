@@ -59,9 +59,8 @@ public class DeleteTaskServlet extends HttpServlet {
             }
         notificationManager.deleteNotsByTaskId(id);
         taskManager.deleteTaskByID(id);
-            resp.sendRedirect("/managerHome");
+            resp.sendRedirect("/addNewTask");
         } catch (IOException | ParseException | SQLException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

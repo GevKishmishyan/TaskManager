@@ -312,13 +312,13 @@
                         <p>Add new task</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="/managerGetUsersList">
                         <i class="material-icons">content_paste</i>
                         <p>Users List</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/managerGetTasksList">
                         <i class="material-icons">library_books</i>
                         <p>Tasks List</p>
@@ -402,28 +402,25 @@
                                     <table class="table table-hover">
                                         <thead class="">
                                         <th>
-
-                                        </th>
-                                        <th>
                                             ID
                                         </th>
                                         <th>
                                             Name
                                         </th>
                                         <th>
-                                            Surname
+                                            Description
                                         </th>
                                         <th>
-                                            E-Mail
-                                        </th>
-                                        <th>
-                                            Gender
-                                        </th>
-                                        <th>
-                                            Age
+                                            Assigned User
                                         </th>
                                         <th>
                                             Status
+                                        </th>
+                                        <th>
+                                            Created Date
+                                        </th>
+                                        <th>
+                                            Deadline
                                         </th>
                                         <th>
                                             Update
@@ -433,47 +430,38 @@
                                         </th>
                                         </thead>
                                         <tbody>
-
-                                        <% for (User perUser : users) { %>
+                                        <% for (Task perTask : tasks) { %>
                                         <tr>
-                                            <td data-label="Profile Picture">
-                                                <% if (!pattern.matcher(perUser.getProfPicUrl()).matches()) { %>
-                                                <% if (perUser.getGender() == Gender.MALE) { %>
-                                                <img src="/image?path=defMale.png" width="30px" alt="">
-                                                <% } else if (perUser.getGender() == Gender.FEMALE) { %>
-                                                <img src="/image?path=defFemale.png" width="30px" alt="">
-                                                <% }
-                                                } else { %>
-                                                <img src="/image?path=<%= perUser.getProfPicUrl() %>" width="30px"
-                                                     alt="">
-                                                <% } %>
+                                            <td data-label="Id"><%= perTask.getId() %>
                                             </td>
-                                            <td data-label="Id"><%= perUser.getId() %>
+                                            <td data-label="Name" class="taskHover">
+                                                <a href="/getTaskById?id=<%= perTask.getId() %>"
+                                                   style="text-decoration: none; color: black"><%= perTask.getName() %>
+                                                </a>
                                             </td>
-                                            <td data-label="Name"><%= perUser.getName() %>
+                                            <td data-label="Description"
+                                                style="font-size: 11px"><%= perTask.getDescription() %>
                                             </td>
-                                            <td data-label="Surname"><%= perUser.getSurname() %>
+                                            <td data-label="Assigned User"><%= perTask.getAssignedUser().getEmail() %>
                                             </td>
-                                            <td data-label="Email"><%= perUser.getEmail() %>
+                                            <td data-label="Task Status"><%= perTask.getTaskStatus() %>
                                             </td>
-                                            <td data-label="Gender"><%= perUser.getGender() %>
+                                            <td data-label="Created Date"><%= sdf.format(perTask.getCreatedDate()) %>
                                             </td>
-                                            <td data-label="Age"><%= perUser.getAge() %>
+                                            <td data-label="Deadline"><%= sdf.format(perTask.getDeadline()) %>
                                             </td>
-                                            <td data-label="User Status"><%= perUser.getUserStatus() %>
-                                            </td>
-                                            <td data-label="Edit">
-                                                <a href="/getUserForUpdate?id=<%= perUser.getId() %>"
+                                            <td data-label="Update">
+                                                <a href="/getTaskForUpdate?id=<%= perTask.getId() %>"
                                                    style="text-decoration: none">
                                                     <button type="submit" class="btn btn-primary "
-                                                    style="background-color: #298c18">Update</button>
+                                                            style="background-color: #298c18">Update</button>
                                                 </a>
                                             </td>
                                             <td data-label="Delete">
-                                                <a href="/deleteUser?id=<%= perUser.getId() %>"
+                                                <a href="/deleteTask?id=<%= perTask.getId() %>"
                                                    style="text-decoration: none">
-                                                    <button type="submit" class="btn btn-primary"
-                                                    style="background-color: #ba282d">Delete</button>
+                                                    <button type="submit" class="btn btn-primary "
+                                                            style="background-color: #ba282d">Delete</button>
                                                 </a>
                                             </td>
                                         </tr>

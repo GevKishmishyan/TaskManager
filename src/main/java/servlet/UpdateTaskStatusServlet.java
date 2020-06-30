@@ -1,6 +1,7 @@
 package servlet;
 
 import manager.TaskManager;
+import model.Task;
 import model.TaskStatus;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,17 +16,18 @@ public class UpdateTaskStatusServlet extends HttpServlet {
 
     private static final TaskManager taskManager = new TaskManager();
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
         TaskStatus taskStatus = TaskStatus.valueOf(req.getParameter("taskStatus"));
         int id = Integer.parseInt(req.getParameter("id"));
         try {
+            req.removeAttribute("taskById");
+            Task taskByID = taskManager.getTaskByID(id);
             taskManager.updateTaskStatus(taskStatus, id);
-            resp.sendRedirect("/userHome");
+            req.setAttribute("taskById", taskByID);
+            resp.sendRedirect("/getTaskById?id=" + id);
         } catch (SQLException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

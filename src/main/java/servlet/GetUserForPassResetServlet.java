@@ -34,7 +34,6 @@ public class GetUserForPassResetServlet extends HttpServlet {
                     req.getRequestDispatcher("/WEB-INF/getUser.jsp").forward(req, resp);
                 }
             } catch (SQLException | ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
                 e.printStackTrace();
             }
         } else {
@@ -42,7 +41,6 @@ public class GetUserForPassResetServlet extends HttpServlet {
             try {
                 resp.sendRedirect("/forgotPass");
             } catch (IOException ex) {
-//                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
                 ex.printStackTrace();
             }
         }

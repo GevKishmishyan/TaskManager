@@ -22,6 +22,36 @@
     <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet"/>
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet"/>
+
+    <%--  Costum css  --%>
+    <style type="text/css">
+        #updateProfilePic {
+            display: none;
+        }
+
+        #updateProfilePicLabel {
+            color: #fff;
+            background-color: #9c27b0;
+            border-color: #9c27b0;
+            box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+            position: relative;
+            padding: 12px 48%;
+            width: 100%;
+            margin: 0.3125rem 1px;
+            font-size: .75rem;
+            font-weight: 400;
+            line-height: 1.428571;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            cursor: pointer;
+            border: 0;
+            border-radius: 0.2rem;
+            outline: 0;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: box-shadow, transform;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,13 +66,13 @@
 
     String userRegMsg = "";
     String taskCreateMsg = "";
-    if (session.getAttribute("userRegMsg") != null) {
-        userRegMsg = (String) session.getAttribute("userRegMsg");
+    if (session.getAttribute("message") != null) {
+        userRegMsg = (String) session.getAttribute("message");
     }
     if (session.getAttribute("taskCreateMsg") != null) {
         taskCreateMsg = (String) session.getAttribute("taskCreateMsg");
     }
-    session.removeAttribute("userRegMsg");
+    session.removeAttribute("message");
     session.removeAttribute("taskCreateMsg");
 
 %>
@@ -300,7 +330,7 @@
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/addNewUser">
                         <i class="material-icons">assignment_ind</i>
                         <p>Add new user</p>
@@ -312,7 +342,7 @@
                         <p>Add new task</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="/managerGetUsersList">
                         <i class="material-icons">content_paste</i>
                         <p>Users List</p>
@@ -392,95 +422,96 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-plain">
+                        <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title mt-0"> Users List</h4>
-                                <p class="card-category"> Here is a list of our employees</p>
+                                <h4 class="card-title">Add new user</h4>
+                                <p class="card-category">Please fill all fields for adding new user</p>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead class="">
-                                        <th>
+                                <p style="color: gainsboro; text-align: center; font-size: 13px"><%= userRegMsg %>
+                                <form action="/register" method="post" enctype="multipart/form-data" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Fist Name</label>
+                                                <input type="text" name="name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Last Name</label>
+                                                <input type="text" name="surname" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Email address</label>
+                                                <input type="email" name="email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Password</label>
+                                                <input type="password" name="password" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Gender</label>
+                                                <select name="gender" class="form-control">
+                                                    <option disabled selected value>Select user gender</option>--%>
+                                                    <option value="MALE">Male</option>
+                                                    <option value="FEMALE">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Age</label>
+                                                <input type="number" name="age" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Account status</label>
+                                                <select name="userStatus" class="form-control">
+                                                    <option disabled selected value>Select user status</option>--%>
+                                                    <option value="MANAGER">Manager</option>
+                                                    <option value="USER">User</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                        </th>
-                                        <th>
-                                            ID
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Surname
-                                        </th>
-                                        <th>
-                                            E-Mail
-                                        </th>
-                                        <th>
-                                            Gender
-                                        </th>
-                                        <th>
-                                            Age
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Update
-                                        </th>
-                                        <th>
-                                            Delete
-                                        </th>
-                                        </thead>
-                                        <tbody>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
 
-                                        <% for (User perUser : users) { %>
-                                        <tr>
-                                            <td data-label="Profile Picture">
-                                                <% if (!pattern.matcher(perUser.getProfPicUrl()).matches()) { %>
-                                                <% if (perUser.getGender() == Gender.MALE) { %>
-                                                <img src="/image?path=defMale.png" width="30px" alt="">
-                                                <% } else if (perUser.getGender() == Gender.FEMALE) { %>
-                                                <img src="/image?path=defFemale.png" width="30px" alt="">
-                                                <% }
-                                                } else { %>
-                                                <img src="/image?path=<%= perUser.getProfPicUrl() %>" width="30px"
-                                                     alt="">
-                                                <% } %>
-                                            </td>
-                                            <td data-label="Id"><%= perUser.getId() %>
-                                            </td>
-                                            <td data-label="Name"><%= perUser.getName() %>
-                                            </td>
-                                            <td data-label="Surname"><%= perUser.getSurname() %>
-                                            </td>
-                                            <td data-label="Email"><%= perUser.getEmail() %>
-                                            </td>
-                                            <td data-label="Gender"><%= perUser.getGender() %>
-                                            </td>
-                                            <td data-label="Age"><%= perUser.getAge() %>
-                                            </td>
-                                            <td data-label="User Status"><%= perUser.getUserStatus() %>
-                                            </td>
-                                            <td data-label="Edit">
-                                                <a href="/getUserForUpdate?id=<%= perUser.getId() %>"
-                                                   style="text-decoration: none">
-                                                    <button type="submit" class="btn btn-primary "
-                                                    style="background-color: #298c18">Update</button>
-                                                </a>
-                                            </td>
-                                            <td data-label="Delete">
-                                                <a href="/deleteUser?id=<%= perUser.getId() %>"
-                                                   style="text-decoration: none">
-                                                    <button type="submit" class="btn btn-primary"
-                                                    style="background-color: #ba282d">Delete</button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="file" name="profilePic" id="updateProfilePic">
+                                                <label for="updateProfilePic" id="updateProfilePicLabel">
+                                                    <span class="material-icons" style="font-size: 19px">
+                                                        add_photo_alternate
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Create Profile</button>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
                         </div>
                     </div>

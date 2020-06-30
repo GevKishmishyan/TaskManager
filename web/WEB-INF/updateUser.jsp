@@ -119,14 +119,24 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <% if (sessionUser.getUserStatus() == UserStatus.MANAGER){ %>
                 <li class="nav-item ">
                     <a class="nav-link" href="/userProfile">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
                     </a>
                 </li>
-                <% } %>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/addNewUser">
+                        <i class="material-icons">assignment_ind</i>
+                        <p>Add new user</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/addNewTask">
+                        <i class="material-icons">assignment_turned_in</i>
+                        <p>Add new task</p>
+                    </a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/managerGetUsersList">
                         <i class="material-icons">content_paste</i>
@@ -153,15 +163,8 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="javascript:void(0)">User Profile</a>
+                    <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
-                        aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                </button>
                 <div class="collapse navbar-collapse justify-content-end">
                     <form class="navbar-form">
                         <div class="input-group no-border">
@@ -174,7 +177,7 @@
                     </form>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
+                            <a class="nav-link" href="/managerHome">
                                 <i class="material-icons">dashboard</i>
                                 <p class="d-lg-none d-md-block">
                                     Stats
@@ -182,8 +185,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
                                 <span class="notification">5</span>
                                 <p class="d-lg-none d-md-block">
@@ -199,7 +201,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
+                            <a class="nav-link" href="/userProfile">
                                 <i class="material-icons">person</i>
                                 <p class="d-lg-none d-md-block">
                                     Account
@@ -345,33 +347,9 @@
         </div>
         <footer class="footer">
             <div class="container-fluid">
-                <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://creative-tim.com/presentation">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
                 <div class="copyright float-right" id="date">
                     , made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                    <a href="#" target="_self">Gevorg Kishmishyan</a> for a better web.
                 </div>
             </div>
         </footer>

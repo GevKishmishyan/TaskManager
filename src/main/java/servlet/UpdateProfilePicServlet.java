@@ -41,7 +41,7 @@ public class UpdateProfilePicServlet extends HttpServlet {
             req.getSession().removeAttribute("user");
             User userById = userManager.getUserById((int) user.getId());
             req.getSession().setAttribute("user", userById);
-            resp.sendRedirect("/managerProfile");
+            resp.sendRedirect("/userProfile");
         } catch (SQLException | ServletException | IOException e) {
             e.printStackTrace();
         }

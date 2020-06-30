@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.regex.Pattern" %>
-<%@ page import="model.*" %><%--
+<%@ page import="model.*" %>
+<%@ page import="java.time.LocalDateTime" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 29/06/2020
@@ -22,6 +23,36 @@
     <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet"/>
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet"/>
+
+    <%--  Costum css  --%>
+    <style type="text/css">
+        #updateProfilePic {
+            display: none;
+        }
+
+        #updateProfilePicLabel {
+            color: #fff;
+            background-color: #9c27b0;
+            border-color: #9c27b0;
+            box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+            position: relative;
+            padding: 12px 48%;
+            width: 100%;
+            margin: 0.3125rem 1px;
+            font-size: .75rem;
+            font-weight: 400;
+            line-height: 1.428571;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            cursor: pointer;
+            border: 0;
+            border-radius: 0.2rem;
+            outline: 0;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: box-shadow, transform;
+        }
+    </style>
 </head>
 <body>
 
@@ -34,16 +65,11 @@
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
 
-    String userRegMsg = "";
     String taskCreateMsg = "";
-    if (session.getAttribute("userRegMsg") != null) {
-        userRegMsg = (String) session.getAttribute("userRegMsg");
+    if (session.getAttribute("message") != null) {
+        taskCreateMsg = (String) session.getAttribute("message");
     }
-    if (session.getAttribute("taskCreateMsg") != null) {
-        taskCreateMsg = (String) session.getAttribute("taskCreateMsg");
-    }
-    session.removeAttribute("userRegMsg");
-    session.removeAttribute("taskCreateMsg");
+    session.removeAttribute("message");
 
 %>
 
@@ -306,13 +332,13 @@
                         <p>Add new user</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/addNewTask">
                         <i class="material-icons">assignment_turned_in</i>
                         <p>Add new task</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="/managerGetUsersList">
                         <i class="material-icons">content_paste</i>
                         <p>Users List</p>
@@ -392,95 +418,66 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-plain">
+                        <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title mt-0"> Users List</h4>
-                                <p class="card-category"> Here is a list of our employees</p>
+                                <h4 class="card-title">Assign new task</h4>
+                                <p class="card-category">Please fill all fields for adding new task</p>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead class="">
-                                        <th>
-
-                                        </th>
-                                        <th>
-                                            ID
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Surname
-                                        </th>
-                                        <th>
-                                            E-Mail
-                                        </th>
-                                        <th>
-                                            Gender
-                                        </th>
-                                        <th>
-                                            Age
-                                        </th>
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th>
-                                            Update
-                                        </th>
-                                        <th>
-                                            Delete
-                                        </th>
-                                        </thead>
-                                        <tbody>
-
-                                        <% for (User perUser : users) { %>
-                                        <tr>
-                                            <td data-label="Profile Picture">
-                                                <% if (!pattern.matcher(perUser.getProfPicUrl()).matches()) { %>
-                                                <% if (perUser.getGender() == Gender.MALE) { %>
-                                                <img src="/image?path=defMale.png" width="30px" alt="">
-                                                <% } else if (perUser.getGender() == Gender.FEMALE) { %>
-                                                <img src="/image?path=defFemale.png" width="30px" alt="">
-                                                <% }
-                                                } else { %>
-                                                <img src="/image?path=<%= perUser.getProfPicUrl() %>" width="30px"
-                                                     alt="">
-                                                <% } %>
-                                            </td>
-                                            <td data-label="Id"><%= perUser.getId() %>
-                                            </td>
-                                            <td data-label="Name"><%= perUser.getName() %>
-                                            </td>
-                                            <td data-label="Surname"><%= perUser.getSurname() %>
-                                            </td>
-                                            <td data-label="Email"><%= perUser.getEmail() %>
-                                            </td>
-                                            <td data-label="Gender"><%= perUser.getGender() %>
-                                            </td>
-                                            <td data-label="Age"><%= perUser.getAge() %>
-                                            </td>
-                                            <td data-label="User Status"><%= perUser.getUserStatus() %>
-                                            </td>
-                                            <td data-label="Edit">
-                                                <a href="/getUserForUpdate?id=<%= perUser.getId() %>"
-                                                   style="text-decoration: none">
-                                                    <button type="submit" class="btn btn-primary "
-                                                    style="background-color: #298c18">Update</button>
-                                                </a>
-                                            </td>
-                                            <td data-label="Delete">
-                                                <a href="/deleteUser?id=<%= perUser.getId() %>"
-                                                   style="text-decoration: none">
-                                                    <button type="submit" class="btn btn-primary"
-                                                    style="background-color: #ba282d">Delete</button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <p style="color: gainsboro; text-align: center; font-size: 13px"><%= taskCreateMsg %>
+                                <form action="/addTask" method="post" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Title</label>
+                                                <input type="text" name="name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Assigned user</label>
+                                                <select name="assignedUser" class="form-control">
+                                                    <option disabled selected value>Select assigned user</option>
+                                                    <% for (User perUser : users) { %>
+                                                    <% if (perUser.getUserStatus() == UserStatus.USER) { %>
+                                                    <option value="<%= perUser.getEmail() %>"><%= perUser.getName() %>&nbsp;<%= perUser.getSurname() %>
+                                                    </option>
+                                                    <% }
+                                                    } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Task status</label>
+                                                <select name="taskStatus" class="form-control">
+                                                    <option disabled selected value>Select task status</option>
+                                                    <option value="TODO">To do</option>
+                                                    <option value="IN_PROGRESS">In progress</option>
+                                                    <option value="FINISHED">Finished</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Deadline</label>
+                                                <input type="datetime-local" name="deadline" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Description</label>
+                                                <textarea class="form-control" style="height: 50px" name="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Create Task</button>
+                                    <div class="clearfix"></div>
+                                </form>
                             </div>
                         </div>
                     </div>
