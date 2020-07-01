@@ -58,6 +58,27 @@ public class NotificationManager {
         return allNotifications;
     }
 
+    public List<Notification> getAllShowedNots() throws SQLException {
+        String query = "SELECT * FROM notifications WHERE is_shown = 1";
+        List<Notification> allNotifications = new ArrayList<Notification>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            allNotifications.add(getNotificationFromResultSet(resultSet));
+        }
+        return allNotifications;
+    }
+    public List<Notification> getAllShowedNotsByType(NotType notType) throws SQLException {
+        String query = "SELECT * FROM notifications WHERE is_shown = 1 AND not_type = '" + notType + "'";
+        List<Notification> allNotifications = new ArrayList<Notification>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            allNotifications.add(getNotificationFromResultSet(resultSet));
+        }
+        return allNotifications;
+    }
+
     public Notification getNotByID(int id) {
         String sql = "SELECT * FROM notifications WHERE id = '" + id + "'";
         try {

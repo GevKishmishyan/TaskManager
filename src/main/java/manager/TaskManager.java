@@ -161,6 +161,17 @@ public class TaskManager {
         return allTasks;
     }
 
+    public List<Task> getAllTasksByStatus(TaskStatus taskStatus) throws SQLException, ParseException {
+        String query = "SELECT * FROM tasks WHERE task_status = '" + taskStatus + "'";
+        List<Task> allTasks = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            allTasks.add(getTaskFromResultSet(resultSet));
+        }
+        return allTasks;
+    }
+
     public List<Task> getTasksIfContains(String search) throws SQLException, ParseException {
         String query = "SELECT * FROM tasks WHERE `name` LIKE ?";
         List<Task> allTasks = new ArrayList<>();

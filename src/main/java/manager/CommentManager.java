@@ -93,6 +93,16 @@ public class CommentManager {
         }
         return commentsByTaskId;
     }
+    public List<Comment> getActiveComments() throws SQLException, ParseException {
+        String query = "SELECT * FROM comments WHERE is_active = 1";
+        List<Comment> commentsByTaskId = new ArrayList<Comment>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            commentsByTaskId.add(getCommentFromResultSet(resultSet));
+        }
+        return commentsByTaskId;
+    }
 
     public List<Comment> getActiveReplyesByCommentId(int id) throws SQLException, ParseException {
         String query = "SELECT * FROM comments WHERE parrent_comment_id = '" + id + "' AND is_active = 1";
