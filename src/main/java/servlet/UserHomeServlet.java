@@ -35,11 +35,9 @@ public class UserHomeServlet extends HttpServlet {
                     allNotsByUser.addAll(notShowedNotsByTaskId);
                 }
             }
-            req.setAttribute("tasks", tasksByUser);
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/user.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

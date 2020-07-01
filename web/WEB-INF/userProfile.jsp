@@ -3,13 +3,7 @@
 <%@ page import="java.util.regex.Pattern" %>
 <%@ page import="model.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="manager.TaskManager" %><%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 29/06/2020
-  Time: 6:11 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="manager.TaskManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -54,13 +48,9 @@
         }
     </style>
 </head>
-<body>
-
+<body class="dark-edition">
 <%
     User user = (User) session.getAttribute("user");
-    List<User> users = (List<User>) request.getAttribute("users");
-    List<Task> tasks = (List<Task>) request.getAttribute("tasks");
-    TaskManager taskManager = new TaskManager();
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
     List<Notification> userNots = new ArrayList<>();
     if (user.getUserStatus() == UserStatus.USER) {
@@ -77,21 +67,8 @@
         }
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
-
-    String userRegMsg = "";
-    String taskCreateMsg = "";
-    if (session.getAttribute("userRegMsg") != null) {
-        userRegMsg = (String) session.getAttribute("userRegMsg");
-    }
-    if (session.getAttribute("taskCreateMsg") != null) {
-        taskCreateMsg = (String) session.getAttribute("taskCreateMsg");
-    }
-    session.removeAttribute("userRegMsg");
-    session.removeAttribute("taskCreateMsg");
-
 %>
 <div class="wrapper ">
     <% if (user.getUserStatus() == UserStatus.MANAGER) { %>
@@ -246,23 +223,23 @@
                                 <% } %>
                                 <% } else {
                                     if (!not.getAuthor().equals(user)) { %>
-                                        <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
-                                            <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
-                                            </strong>
-                                            &nbsp;
-                                            <% if (not.getNotType() == NotType.NEW_TASK) { %>
-                                            assigned you new task:
-                                            <% } else if (not.getNotType() == NotType.COMMENT) { %>
-                                            added comment on task:
-                                            <% } else if (not.getNotType() == NotType.REPLY) { %>
-                                            replied to comment on task:
-                                            <% } %>
-                                            &nbsp;
-                                            <strong><%= not.getTask().getName() %>
-                                            </strong>
-                                        </a>
-                                    <% }
-                                    } %>
+                                <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                    <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
+                                    </strong>
+                                    &nbsp;
+                                    <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                    assigned you new task:
+                                    <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                    added comment on task:
+                                    <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                    replied to comment on task:
+                                    <% } %>
+                                    &nbsp;
+                                    <strong><%= not.getTask().getName() %>
+                                    </strong>
+                                </a>
+                                <% }
+                                } %>
 
                                 <% }
                                 } %>
@@ -341,65 +318,15 @@
                     <div class="col-md-4">
                         <div class="card card-profile">
                             <div class="card-avatar">
-                                <% if
-                                (
-                                        user
-                                                .
-                                                        getUserStatus
-                                                                (
-                                                                )
-                                                ==
-                                                UserStatus
-                                                        .
-                                                        MANAGER
-                                ) { %>
+                                <% if (user.getUserStatus() == UserStatus.MANAGER) { %>
                                 <a href="/managerHome">
                                         <% } else { %>
                                     <a href="/userHome">
                                         <% } %>
-                                        <% if
-                                        (
-                                                !
-                                                        pattern
-                                                                .
-                                                                        matcher
-                                                                                (
-                                                                                        user
-                                                                                                .
-                                                                                                        getProfPicUrl
-                                                                                                                (
-                                                                                                                )
-                                                                                )
-                                                                .
-                                                                        matches
-                                                                                (
-                                                                                )
-                                        ) { %>
-                                        <% if
-                                        (
-                                                user
-                                                        .
-                                                                getGender
-                                                                        (
-                                                                        )
-                                                        ==
-                                                        Gender
-                                                                .
-                                                                MALE
-                                        ) { %>
+                                        <% if (!pattern.matcher(user.getProfPicUrl()).matches()) { %>
+                                        <% if (user.getGender() == Gender.MALE) { %>
                                         <img class="img" src="/image?path=defMale.png" width="30px" alt="">
-                                        <% } else if
-                                        (
-                                                user
-                                                        .
-                                                                getGender
-                                                                        (
-                                                                        )
-                                                        ==
-                                                        Gender
-                                                                .
-                                                                FEMALE
-                                        ) { %>
+                                        <% } else if (user.getGender() == Gender.FEMALE) { %>
                                         <img class="img" src="/image?path=defFemale.png" width="30px" alt="">
                                         <% }
                                         } else { %>
@@ -422,26 +349,10 @@
 
                                 </form>
                                 <br>
-                                <h6 class="card-category"><%= user
-                                        .
-                                                getUserStatus
-                                                        (
-                                                        ) %>
+                                <h6 class="card-category"><%= user.getUserStatus() %>
                                 </h6>
-                                <h4 class="card-title"><%= user
-                                        .
-                                                getName
-                                                        (
-                                                        ) %> <%= user
-                                        .
-                                                getSurname
-                                                        (
-                                                        ) %>
+                                <h4 class="card-title"><%= user.getName() %> <%= user.getSurname() %>
                                 </h4>
-                                <%--                                <p class="card-description">--%>
-                                <%--                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...--%>
-                                <%--                                </p>--%>
-                                <%--                                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>--%>
                             </div>
                         </div>
                     </div>
@@ -461,6 +372,57 @@
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+
+            <li class="header-title">Thank you for choosing us!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 

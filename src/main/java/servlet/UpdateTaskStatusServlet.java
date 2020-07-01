@@ -18,7 +18,6 @@ public class UpdateTaskStatusServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-
         TaskStatus taskStatus = TaskStatus.valueOf(req.getParameter("taskStatus"));
         int id = Integer.parseInt(req.getParameter("id"));
         try {

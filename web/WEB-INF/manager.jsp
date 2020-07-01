@@ -1,7 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.*" %>
-<%@ page import="java.util.regex.Pattern" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -17,7 +15,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="dark-edition">
 <%
     User user = (User) session.getAttribute("user");
     List<User> users = (List<User>) request.getAttribute("users");
@@ -36,21 +34,6 @@
             userNots.add(not);
         }
     }
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
-    Pattern pattern = Pattern.compile(regex);
-
-    String userRegMsg = "";
-    String taskCreateMsg = "";
-    if (session.getAttribute("userRegMsg") != null) {
-        userRegMsg = (String) session.getAttribute("userRegMsg");
-    }
-    if (session.getAttribute("taskCreateMsg") != null) {
-        taskCreateMsg = (String) session.getAttribute("taskCreateMsg");
-    }
-    session.removeAttribute("userRegMsg");
-    session.removeAttribute("taskCreateMsg");
-
 %>
 
 <div class="wrapper ">
@@ -423,6 +406,57 @@
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+
+            <li class="header-title">Thank you for choosing us!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 

@@ -35,7 +35,6 @@ public class UserRegisterServlet extends HttpServlet {
         String gender = req.getParameter("gender");
         String age = req.getParameter("age");
         String userStatus = req.getParameter("userStatus");
-
         try {
             User user = User.builder()
                     .name(name)

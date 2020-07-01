@@ -48,7 +48,6 @@ public class ManagerHomeServlet extends HttpServlet {
                     allNotsByUser.addAll(notShowedNotsByTaskId);
                 }
             }
-
             req.setAttribute("finishedTasks", allTasksByFinishedStatus);
             req.setAttribute("toDoTasks", allTasksByToDoStatus);
             req.setAttribute("inProgressTasks", allTasksByInProgressStatus);

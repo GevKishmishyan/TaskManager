@@ -73,12 +73,6 @@
                 <input type="hidden" name="userStatus" value="USER">
                 <lable>PROFILE IMAGE</lable>
                 <input type="file" name="profilePic" placeholder="Your profile image">
-                <%--        <p class="terms">--%>
-                <%--          <input type="checkbox">--%>
-                <%--          I agree all statments in--%>
-                <%--          <a href="#" class="lined-link">terms of service</a>--%>
-                <%--        </p>--%>
-                <%--        <button type="submit" class="form-btn">Sign Up</button>--%>
                 <input type="submit"
                        class="form-btn"
                        value="Sign Up"/>

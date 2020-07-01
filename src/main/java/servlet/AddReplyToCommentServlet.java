@@ -47,7 +47,6 @@ public class AddReplyToCommentServlet extends HttpServlet {
             notificationManager.addNotification(notification);
             resp.sendRedirect("/getTaskById?id=" + replyedComment.getTask().getId());
         } catch (SQLException | ExistingModelException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

@@ -15,7 +15,6 @@ public class LogoutServlet extends HttpServlet {
         try {
             resp.sendRedirect("/");
         } catch (IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

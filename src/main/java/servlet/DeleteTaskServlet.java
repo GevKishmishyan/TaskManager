@@ -46,10 +46,10 @@ public class DeleteTaskServlet extends HttpServlet {
         int id = Integer.parseInt(idStr);
         try {
             List<Comment> activeCommentsByTaskId = commentManager.getActiveCommentsByTaskId(id);
-            if (activeCommentsByTaskId != null){
+            if (activeCommentsByTaskId != null) {
                 for (Comment comment : activeCommentsByTaskId) {
                     List<Comment> activeReplyesByCommentId = commentManager.getActiveReplyesByCommentId(comment.getId());
-                    if (activeReplyesByCommentId != null){
+                    if (activeReplyesByCommentId != null) {
                         for (Comment perReply : activeReplyesByCommentId) {
                             commentManager.deleteCommentById(perReply.getId());
                         }
@@ -59,7 +59,7 @@ public class DeleteTaskServlet extends HttpServlet {
             }
         notificationManager.deleteNotsByTaskId(id);
         taskManager.deleteTaskByID(id);
-            resp.sendRedirect("/addNewTask");
+            resp.sendRedirect("/managerGetTasksList");
         } catch (IOException | ParseException | SQLException e) {
             e.printStackTrace();
         }

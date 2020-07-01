@@ -17,17 +17,6 @@
     session.removeAttribute("message");
 %>
 
-<%--<div class="login">--%>
-<%--    <img src="../img/icon.png" alt="icon" id="icon">--%>
-<%--    <h1 style="font-size: 24px">Input your email</h1>--%>
-<%--    <p style="color: gainsboro; text-align: center; font-size: 13px"><%= msg %></p>--%>
-<%--    <form action="/getUser" method="post">--%>
-<%--        <input class="inp" type="email" name="email" placeholder="E-mail" required="required"/>--%>
-<%--        <button type="submit" class="btn btn-primary btn-block btn-large">Next.</button>--%>
-<%--    </form>--%>
-<%--</div>--%>
-
-
 <div class="main-box">
     <div class="slider-cont">
         <div class="signup-slider">

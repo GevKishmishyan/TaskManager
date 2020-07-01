@@ -17,16 +17,6 @@
     session.removeAttribute("message");
 %>
 
-<%--<div class="login">--%>
-<%--    <img src="../img/icon.png" alt="icon" id="icon">--%>
-<%--    <h1 style="font-size: 24px">Input new password</h1>--%>
-<%--    <p style="color: gainsboro; text-align: center; font-size: 13px"><%= msg %></p>--%>
-<%--    <form action="/changePass" method="post">--%>
-<%--        <input class="inp" type="password" name="password" placeholder="Password" />--%>
-<%--        <button type="submit" class="btn btn-primary btn-block btn-large">Change password.</button>--%>
-<%--    </form>--%>
-<%--</div>--%>
-
 
 <div class="main-box">
     <div class="slider-cont">

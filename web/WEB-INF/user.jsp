@@ -1,129 +1,3 @@
-<%--<%@ page import="java.util.List" %>--%>
-<%--<%@ page import="java.text.SimpleDateFormat" %>--%>
-<%--<%@ page import="model.*" %>--%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Title</title>--%>
-<%--    <link rel="stylesheet" type="text/css" href="../css/style.css">--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<%--%>
-<%--    User user = (User) session.getAttribute("user");--%>
-<%--    List<Task> tasks = (List<Task>) request.getAttribute("tasks");--%>
-<%--    List<Notification> nots = (List<Notification>) request.getAttribute("allNots");--%>
-<%--    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");--%>
-<%--%>--%>
-
-
-<%--<div class="main">--%>
-<%--    <h1><%= user.getName() %> <%= user.getSurname() %>--%>
-<%--    </h1>--%>
-
-<%--    <div class="top">--%>
-<%--        <div class="search">--%>
-<%--            <form action="/userSearch" method="post" style="margin-left: 28%">--%>
-<%--                <input class="inp" style="width: 39%;  float:left;" type="search" name="search" placeholder="Search"--%>
-<%--                       required="required"/>--%>
-<%--                <button style="width: 20%; margin-left: 2%; float: left;" type="submit"--%>
-<%--                        class="btn btn-primary btn-block btn-large">--%>
-<%--                    Search.--%>
-<%--                </button>--%>
-<%--            </form>--%>
-<%--        </div>--%>
-<%--        <div class="home">--%>
-<%--            <a href="/userHome" style="text-decoration: none">--%>
-<%--                <button style="width: 40%; margin: auto;" type="submit" class="btn btn-primary btn-block btn-large">--%>
-<%--                    Home page.--%>
-<%--                </button>--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--        <div class="logout">--%>
-<%--            <a href="/logout" style="text-decoration: none">--%>
-<%--                <button style="width: 40%; margin: auto;" type="submit" class="btn btn-primary btn-block btn-large">--%>
-<%--                    Log out.--%>
-<%--                </button>--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <div class="allUsers">--%>
-<%--        <h1>Notifications.</h1>--%>
-<%--        <% for (Notification not : nots) { %>--%>
-<%--        <% if (not.getAuthor().getUserStatus() != UserStatus.USER){ %>--%>
-<%--        <p style="color: gainsboro; text-align: center; font-size: 13px">--%>
-<%--            <b><%= not.getAuthor().getName() %> <%= not.getAuthor().getSurname() %>--%>
-<%--            </b>--%>
-<%--            <% if (not.getNotType() == NotType.NEW_TASK) { %>--%>
-<%--            added you the new task:--%>
-<%--            <% } else if (not.getNotType() == NotType.COMMENT) { %>--%>
-<%--            added new comment on task:--%>
-<%--            <% } else if (not.getNotType() == NotType.REPLY) { %>--%>
-<%--            replyed to comment on task:--%>
-<%--            <% } %>--%>
-<%--            <b><%= not.getTask().getName() %>--%>
-<%--            </b>--%>
-<%--            <a href="/seenNot?id=<%= not.getId() %>" style="color: gainsboro; text-align: center; font-size: 13px">seen.</a>--%>
-<%--        </p>--%>
-<%--        <% } %>--%>
-<%--        <% } %>--%>
-<%--    </div>--%>
-<%--    <div class="allUsers">--%>
-<%--        <h1>All my tasks list.</h1>--%>
-<%--        <table>--%>
-<%--            <thead>--%>
-
-<%--            <tr>--%>
-<%--                <th scope="col" width="3%">Id</th>--%>
-<%--                <th scope="col" width="7%">Name</th>--%>
-<%--                <th scope="col" width="20%">Description</th>--%>
-<%--                <th scope="col" width="15%">Assigned User</th>--%>
-<%--                <th scope="col" width="12%">Task Status</th>--%>
-<%--                <th scope="col" width="19%">Created Date</th>--%>
-<%--                <th scope="col" width="19%">Task Deadline</th>--%>
-<%--                <th scope="col" width="10%">Update</th>--%>
-<%--            </tr>--%>
-<%--            </thead>--%>
-<%--            <tbody>--%>
-<%--            <% for (Task perTask : tasks) { %>--%>
-<%--            <tr>--%>
-<%--                <td data-label="Id"><%= perTask.getId() %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Name" class="taskHover">--%>
-<%--                    <a href="/getTaskById?id=<%= perTask.getId() %>"--%>
-<%--                       style="text-decoration: none; color: black"><%= perTask.getName() %>--%>
-<%--                    </a>--%>
-<%--                </td>--%>
-<%--                <td data-label="Description" style="font-size: 11px"><%= perTask.getDescription() %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Assigned User"><%= perTask.getAssignedUser().getEmail() %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Task Status"><%= perTask.getTaskStatus() %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Created Date"><%= sdf.format(perTask.getCreatedDate()) %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Deadline"><%= sdf.format(perTask.getDeadline()) %>--%>
-<%--                </td>--%>
-<%--                <td data-label="Update">--%>
-<%--                    <a href="/getTaskStatus?id=<%= perTask.getId() %>" style="text-decoration: none">--%>
-<%--                        <button type="submit" class="edit btn btn-primary btn-block btn-large"--%>
-<%--                                style="width: 70%; margin: auto">--%>
-<%--                            Update.--%>
-<%--                        </button>--%>
-<%--                    </a>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
-<%--            <% } %>--%>
-<%--            </tbody>--%>
-<%--        </table>--%>
-
-<%--    </div>--%>
-<%--</div>--%>
-
-<%--</body>--%>
-<%--</html>--%>
-
-
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.*" %>
@@ -145,11 +19,9 @@
 
 
 </head>
-<body>
+<body class="dark-edition">
 <%
     User user = (User) session.getAttribute("user");
-    List<User> users = (List<User>) request.getAttribute("users");
-    List<Task> tasks = (List<Task>) request.getAttribute("tasks");
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
     List<Notification> userNots = new ArrayList<>();
     for (Notification not : nots) {
@@ -157,21 +29,6 @@
             userNots.add(not);
         }
     }
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
-    Pattern pattern = Pattern.compile(regex);
-
-    String userRegMsg = "";
-    String taskCreateMsg = "";
-    if (session.getAttribute("userRegMsg") != null) {
-        userRegMsg = (String) session.getAttribute("userRegMsg");
-    }
-    if (session.getAttribute("taskCreateMsg") != null) {
-        taskCreateMsg = (String) session.getAttribute("taskCreateMsg");
-    }
-    session.removeAttribute("userRegMsg");
-    session.removeAttribute("taskCreateMsg");
-
 %>
 
 <div class="wrapper ">
@@ -484,6 +341,57 @@
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+
+            <li class="header-title">Thank you for choosing us!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 

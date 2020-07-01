@@ -20,14 +20,12 @@ public class UpdateProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-
         User user = (User) req.getSession().getAttribute("user");
         int id = (int) user.getId();
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
         int age = Integer.parseInt(req.getParameter("age"));
-
         try {
             userManager.updateUser(name, surname, email, age, id);
             req.getSession().removeAttribute("user");

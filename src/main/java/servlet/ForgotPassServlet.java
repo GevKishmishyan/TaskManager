@@ -9,7 +9,6 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/forgotPass")
 public class ForgotPassServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/getUser.jsp").forward(req, resp);

@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/search")
-public class SearchByUserServlet extends HttpServlet {
-
+public class SearchServletServlet extends HttpServlet {
 
     private static final TaskManager taskManager = new TaskManager();
     private static final NotificationManager notificationManager = new NotificationManager();
@@ -59,12 +58,16 @@ public class SearchByUserServlet extends HttpServlet {
                 }
             }
             req.setAttribute("allNots", allNotsByUser);
-
             req.setAttribute("searchedWord", search);
-            req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
-
+            if (tasksIfContains != null) {
+                req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
+            } else {
+                String refererStr = req.getHeader("Referer");
+                String[] refSplit = refererStr.split("0/");
+                String referer = "/" + refSplit[1];
+                resp.sendRedirect(referer);
+            }
         } catch (SQLException | ParseException | ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
 

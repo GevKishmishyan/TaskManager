@@ -1,14 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.regex.Pattern" %>
 <%@ page import="model.*" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 29/06/2020
-  Time: 6:11 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,32 +19,6 @@
 
     <%--  Costum css  --%>
     <style type="text/css">
-        #updateProfilePic {
-            display: none;
-        }
-
-        #updateProfilePicLabel {
-            color: #fff;
-            background-color: #9c27b0;
-            border-color: #9c27b0;
-            box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
-            position: relative;
-            padding: 12px 12px;
-            margin: 0.3125rem 1px;
-            font-size: .75rem;
-            font-weight: 400;
-            line-height: 1.428571;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0;
-            cursor: pointer;
-            border: 0;
-            border-radius: 0.2rem;
-            outline: 0;
-            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: box-shadow, transform;
-        }
-
         .form-group option {
             font-size: 15px;
             font-weight: 200;
@@ -59,13 +26,10 @@
         }
     </style>
 </head>
-<body>
-
+<body class="dark-edition">
 <%
     User user = (User) request.getAttribute("user");
     User sessionUser = (User) session.getAttribute("user");
-    String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
-    Pattern pattern = Pattern.compile(regex);
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
     List<Notification> userNots = new ArrayList<>();
     for (Notification not : nots) {
@@ -316,6 +280,57 @@
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+
+            <li class="header-title">Thank you for choosing us!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 

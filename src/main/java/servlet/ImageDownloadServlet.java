@@ -15,7 +15,6 @@ public class ImageDownloadServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getParameter("path");
-
         if (path == null || path.length() == 0) {
             resp.sendRedirect("/managerHome");
         }
@@ -37,6 +36,5 @@ public class ImageDownloadServlet extends HttpServlet {
                 }
             }
         }
-
     }
 }

@@ -22,7 +22,7 @@ public class AddCommentServlet extends HttpServlet {
     private static final NotificationManager notificationManager = new NotificationManager();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         int taskID = Integer.parseInt(req.getParameter("hiddenId"));
         String commentStr = req.getParameter("comment");
 
@@ -43,9 +43,7 @@ public class AddCommentServlet extends HttpServlet {
                     .build();
             notificationManager.addNotification(notification);
             resp.sendRedirect("/getTaskById?id=" + taskID);
-//            resp.sendRedirect("/managerHome");
-        } catch (SQLException | ExistingModelException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
+        } catch (SQLException | ExistingModelException | IOException e) {
             e.printStackTrace();
         }
     }

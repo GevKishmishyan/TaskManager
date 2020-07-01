@@ -30,7 +30,6 @@ public class ChangePassServlet extends HttpServlet {
                 req.getSession().setAttribute("message", "Password was successfully changed.");
                 resp.sendRedirect("/");
             } catch (SQLException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
                 e.printStackTrace();
             }
         } else {
@@ -38,7 +37,6 @@ public class ChangePassServlet extends HttpServlet {
             try {
                 req.getRequestDispatcher("/WEB-INF/changePass.jsp").forward(req, resp);
             } catch (IOException | ServletException ex) {
-//                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
                 ex.printStackTrace();
             }
         }

@@ -48,7 +48,6 @@ public class DeleteUserServlet extends HttpServlet {
         String idStr = map.get("id");
         int id = Integer.parseInt(idStr);
         User user = userManager.getUserById(id);
-
         List<Task> tasksByUser = null;
         try {
             tasksByUser = taskManager.getAllTasksByUser(user);
@@ -68,7 +67,6 @@ public class DeleteUserServlet extends HttpServlet {
                 notificationManager.deleteNotsByTaskId((int) task.getId());
                 taskManager.deleteTaskByID((int) task.getId());
             }
-
             userManager.deleteUserByID(id);
             resp.sendRedirect("/managerGetUsersList");
         } catch (SQLException | IOException | ParseException e) {

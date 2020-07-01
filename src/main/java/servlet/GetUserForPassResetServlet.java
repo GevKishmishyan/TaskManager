@@ -19,30 +19,17 @@ public class GetUserForPassResetServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("email");
-        StringBuilder msg = new StringBuilder();
-        if (email == null || email.length() == 0) {
-            msg.append("Email field is required.<br>");
-        }
-        if (msg.toString().equals("")) {
-            try {
-                User currentUser = userManager.getUserByEmail(email);
-                if (currentUser != null) {
-                    req.getSession().setAttribute("user", currentUser);
-                    req.getRequestDispatcher("/WEB-INF/changePass.jsp").forward(req, resp);
-                } else {
-                    req.getSession().setAttribute("message", "Invalid email.");
-                    req.getRequestDispatcher("/WEB-INF/getUser.jsp").forward(req, resp);
-                }
-            } catch (SQLException | ServletException | IOException e) {
-                e.printStackTrace();
+        try {
+            User currentUser = userManager.getUserByEmail(email);
+            if (currentUser != null) {
+                req.getSession().setAttribute("user", currentUser);
+                req.getRequestDispatcher("/WEB-INF/changePass.jsp").forward(req, resp);
+            } else {
+                req.getSession().setAttribute("message", "Invalid email.");
+                req.getRequestDispatcher("/WEB-INF/getUser.jsp").forward(req, resp);
             }
-        } else {
-            req.getSession().setAttribute("message", msg.toString());
-            try {
-                resp.sendRedirect("/forgotPass");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        } catch (SQLException | ServletException | IOException e) {
+            e.printStackTrace();
         }
     }
 }

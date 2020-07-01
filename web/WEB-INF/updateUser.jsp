@@ -1,51 +1,8 @@
 
-
-<%--    <div class="login">--%>
-<%--        <h1>Update user info.</h1>--%>
-<%--        <form action="/updateUser" method="post">--%>
-<%--            <input class="inp" type="number" name="id" placeholder="Id" required="required" readonly value="<%= user.getId() %>"/>--%>
-<%--            <input class="inp" type="text" name="name" placeholder="Name" required="required" value="<%= user.getName() %>"/>--%>
-<%--            <input class="inp" type="text" name="surname" placeholder="Surname" required="required" value="<%= user.getSurname() %>"/>--%>
-<%--            <input class="inp" type="email" name="email" placeholder="E-mail" required="required" value="<%= user.getEmail() %>"/>--%>
-<%--            <input class="inp" type="password" name="password" placeholder="Password" required="required" value="<%= user.getPassword() %>"/>--%>
-<%--            <% if (user.getGender() == Gender.MALE) { %>--%>
-<%--            <input class="choice" type="radio" name="gender" value="MALE" checked> <span class="txt">Male</span>--%>
-<%--            <input class="choice" type="radio" name="gender" value="FEMALE"> <span class="txt">Female</span><br>--%>
-<%--            <% } else if (user.getGender() == Gender.FEMALE) { %>--%>
-<%--            <input class="choice" type="radio" name="gender" value="MALE"> <span class="txt" >Male</span>--%>
-<%--            <input class="choice" type="radio" name="gender" value="FEMALE" checked> <span class="txt">Female</span><br>--%>
-<%--            <% } %>--%>
-<%--            <input class="inp" type="number" name="age" placeholder="Age" required="required" value="<%= user.getAge() %>"/>--%>
-<%--            <% if (user.getUserStatus() == UserStatus.USER) { %>--%>
-<%--            <input class="choice" type="radio" name="userStatus" value="USER" checked> <span class="txt">User</span>--%>
-<%--            <input class="choice" type="radio" name="userStatus" value="MANAGER"> <span class="txt">Manager</span><br>--%>
-<%--            <% } else if (user.getUserStatus() == UserStatus.MANAGER) { %>--%>
-<%--            <input class="choice" type="radio" name="userStatus" value="USER" > <span class="txt">User</span>--%>
-<%--            <input class="choice" type="radio" name="userStatus" value="MANAGER" checked> <span class="txt">Manager</span><br>--%>
-<%--            <% } %>--%>
-<%--            <button type="submit" class="btn btn-primary btn-block btn-large">Update.</button>--%>
-<%--        </form>--%>
-
-<%--        <div class="home" style="width: 100%;">--%>
-<%--            <a href="/managerHome" style="text-decoration: none">--%>
-<%--                <button style="width: 60%; margin: auto;" type="submit" class="btn btn-primary btn-block btn-large">--%>
-<%--                    Home page.--%>
-<%--                </button>--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.regex.Pattern" %>
 <%@ page import="model.*" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 29/06/2020
-  Time: 6:11 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -95,8 +52,7 @@
         }
     </style>
 </head>
-<body>
-
+<body class="dark-edition">
 <%
     User user = (User) request.getAttribute("user");
 
@@ -107,7 +63,6 @@
             userNots.add(not);
         }
     }
-
     User sessionUser = (User) session.getAttribute("user");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
@@ -364,10 +319,6 @@
                                 </h6>
                                 <h4 class="card-title"><%= user.getName() %> <%= user.getSurname() %>
                                 </h4>
-                                <%--                                <p class="card-description">--%>
-                                <%--                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...--%>
-                                <%--                                </p>--%>
-                                <%--                                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>--%>
                             </div>
                         </div>
                     </div>
@@ -387,6 +338,57 @@
             let date = document.getElementById('date');
             date.innerHTML = '&copy; ' + x + date.innerHTML;
         </script>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+
+            <li class="header-title">Thank you for choosing us!</li>
+            <li class="button-container text-center">
+                <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
+                <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
+                <br>
+                <br>
+            </li>
+        </ul>
     </div>
 </div>
 

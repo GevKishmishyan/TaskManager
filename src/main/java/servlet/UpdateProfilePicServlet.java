@@ -27,7 +27,6 @@ public class UpdateProfilePicServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
         User user = (User) req.getSession().getAttribute("user");
-
         try {
             for (Part part : req.getParts()) {
                 if (getFileName(part) != null) {
@@ -45,7 +44,6 @@ public class UpdateProfilePicServlet extends HttpServlet {
         } catch (SQLException | ServletException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private String getFileName(Part part) {

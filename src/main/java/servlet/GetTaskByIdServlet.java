@@ -46,7 +46,6 @@ public class GetTaskByIdServlet extends HttpServlet {
             req.setAttribute("taskComment", commentsByTaskId);
             req.getRequestDispatcher("/WEB-INF/task.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

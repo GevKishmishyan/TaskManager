@@ -25,7 +25,6 @@ public class NotificationSeenServlet extends HttpServlet {
         String[] refSplit = refererStr.split("0/");
         String referer = "/" + refSplit[1];
 
-
         Notification not = notificationManager.getNotByID(id);
         User user = (User) req.getSession().getAttribute("user");
         try {

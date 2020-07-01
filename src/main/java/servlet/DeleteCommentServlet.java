@@ -59,6 +59,5 @@ public class DeleteCommentServlet extends HttpServlet {
         }
         commentManager.deleteCommentById(id);
         resp.sendRedirect("/getTaskById?id=" + taskByID.getId());
-
     }
 }

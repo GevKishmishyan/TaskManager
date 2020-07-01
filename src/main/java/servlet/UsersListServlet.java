@@ -31,7 +31,6 @@ public class UsersListServlet extends HttpServlet {
         try {
             List<User> allUsers = userManager.getAllUsers();
             List<Task> allTasks = taskManager.getAllTasks();
-            List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
             User user = (User) req.getSession().getAttribute("user");
             if (user.getUserStatus() != UserStatus.MANAGER) {
                 req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
@@ -45,8 +44,6 @@ public class UsersListServlet extends HttpServlet {
                 }
             }
             req.setAttribute("users", allUsers);
-            req.setAttribute("tasks", allTasks);
-            req.setAttribute("usersByStatus", allUsersByStatus);
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/usersList.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {

@@ -49,7 +49,6 @@ public class GetUserForUpdateServlet extends HttpServlet {
         int id = Integer.parseInt(idStr);
         try {
             User user = userManager.getUserById(id);
-
             req.setAttribute("user", user);
             List<Task> allTasks = taskManager.getAllTasks();
             List<Notification> allNotsByUser = new ArrayList<>();

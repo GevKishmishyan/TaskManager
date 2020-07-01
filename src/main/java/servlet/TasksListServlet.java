@@ -30,11 +30,6 @@ public class TasksListServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            List<User> allUsers = userManager.getAllUsers();
-            List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
-//            if (user.getUserStatus() != UserStatus.MANAGER) {
-//                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
-//            }
             User user = (User) req.getSession().getAttribute("user");
             List<Task> allTasks = taskManager.getAllTasks();
             if (user.getUserStatus() == UserStatus.MANAGER) {
@@ -51,8 +46,6 @@ public class TasksListServlet extends HttpServlet {
                     allNotsByUser.addAll(notShowedNotsByTaskId);
                 }
             }
-            req.setAttribute("users", allUsers);
-            req.setAttribute("usersByStatus", allUsersByStatus);
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/tasksList.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {

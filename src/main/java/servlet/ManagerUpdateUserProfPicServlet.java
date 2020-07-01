@@ -20,7 +20,6 @@ import java.sql.SQLException;
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ManagerUpdateUserProfPicServlet extends HttpServlet {
 
-
     private static final UserManager userManager = new UserManager();
     private static final String UPLOAD_DIR = "E:\\Projects\\TaskManager\\uploads\\profilePics";
 

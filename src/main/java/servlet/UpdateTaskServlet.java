@@ -32,13 +32,11 @@ public class UpdateTaskServlet extends HttpServlet {
         TaskStatus taskStatus = TaskStatus.valueOf(req.getParameter("taskStatus"));
         String deadlineStr = req.getParameter("deadline");
         String[] splitedDeadline = deadlineStr.split("T");
-
         try {
             Date deadline = sdf.parse(splitedDeadline[0] + " " + splitedDeadline[1]);
 
             User assignedUser = userManager.getUserByEmail(assignedUserEmail);
             User manager = (User) req.getSession().getAttribute("user");
-
             Task task = Task.builder()
                     .name(name)
                     .description(description)

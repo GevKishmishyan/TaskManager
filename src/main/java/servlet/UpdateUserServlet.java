@@ -27,7 +27,6 @@ public class UpdateUserServlet extends HttpServlet {
         Gender gender = Gender.valueOf(req.getParameter("gender"));
         int age = Integer.parseInt(req.getParameter("age"));
         UserStatus userStatus = UserStatus.valueOf(req.getParameter("userStatus"));
-
         try {
             User user = User.builder()
                     .name(name)

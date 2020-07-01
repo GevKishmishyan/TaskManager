@@ -39,7 +39,5 @@ public class LoginServlet extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-
-
     }
 }

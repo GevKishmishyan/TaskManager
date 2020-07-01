@@ -37,7 +37,6 @@ public class CreateTaskServlet extends HttpServlet {
                 deadline = sdf.parse(splitedDeadline[0] + " " + splitedDeadline[1]);
                 User assignedUser = userManager.getUserByEmail(assignedUserEmail);
                 User manager = (User) req.getSession().getAttribute("user");
-
                 Task task = Task.builder()
                         .name(name)
                         .description(description)

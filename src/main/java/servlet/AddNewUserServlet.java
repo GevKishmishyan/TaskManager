@@ -29,14 +29,8 @@ public class AddNewUserServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            List<User> allUsers = userManager.getAllUsers();
             List<Task> allTasks = taskManager.getAllTasks();
-            List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
             User user = (User) req.getSession().getAttribute("user");
-            if (user.getUserStatus() != UserStatus.MANAGER) {
-                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
-            }
-
             List<Notification> allNotsByUser = new ArrayList<>();
             for (Task task : allTasks) {
                 List<Notification> notShowedNotsByTaskId = notificationManager.getAllNotShowedNotsByTaskId((int) task.getId());
@@ -44,9 +38,6 @@ public class AddNewUserServlet extends HttpServlet {
                     allNotsByUser.addAll(notShowedNotsByTaskId);
                 }
             }
-            req.setAttribute("users", allUsers);
-            req.setAttribute("tasks", allTasks);
-            req.setAttribute("usersByStatus", allUsersByStatus);
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/managerAddNewUser.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException e) {
