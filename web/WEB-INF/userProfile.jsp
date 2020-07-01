@@ -1,7 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.regex.Pattern" %>
-<%@ page import="model.*" %><%--
+<%@ page import="model.*" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="manager.TaskManager" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 29/06/2020
@@ -58,7 +60,23 @@
     User user = (User) session.getAttribute("user");
     List<User> users = (List<User>) request.getAttribute("users");
     List<Task> tasks = (List<Task>) request.getAttribute("tasks");
+    TaskManager taskManager = new TaskManager();
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
+    List<Notification> userNots = new ArrayList<>();
+    if (user.getUserStatus() == UserStatus.USER) {
+        for (Notification not : nots) {
+            if (!not.getAuthor().equals(user) && not.getTask().getAssignedUser().equals(user)) {
+                userNots.add(not);
+            }
+        }
+    } else {
+        for (Notification not : nots) {
+            if (!not.getAuthor().equals(user)) {
+                userNots.add(not);
+            }
+        }
+    }
+
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
@@ -194,17 +212,60 @@
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
-                                <span class="notification">5</span>
+                                <% if (userNots.size() != 0) { %>
+                                <span class="notification"><%= userNots.size() %></span>
+                                <% } else { %>
+                                <span class="notification"></span>
+                                <% } %>
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                                <% if (nots.size() != 0) { %>
+                                <% for (Notification not : userNots) { %>
+
+                                <%
+                                    if (user.getUserStatus() == UserStatus.USER) {
+                                        if (!not.getAuthor().equals(user) && not.getTask().getAssignedUser().equals(user)) { %>
+                                <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                    <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
+                                    </strong>
+                                    &nbsp;
+                                    <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                    assigned you new task:
+                                    <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                    added comment on task:
+                                    <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                    replied to comment on task:
+                                    <% } %>
+                                    &nbsp;
+                                    <strong><%= not.getTask().getName() %>
+                                    </strong>
+                                </a>
+                                <% } %>
+                                <% } else {
+                                    if (!not.getAuthor().equals(user)) { %>
+                                        <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                            <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
+                                            </strong>
+                                            &nbsp;
+                                            <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                            assigned you new task:
+                                            <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                            added comment on task:
+                                            <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                            replied to comment on task:
+                                            <% } %>
+                                            &nbsp;
+                                            <strong><%= not.getTask().getName() %>
+                                            </strong>
+                                        </a>
+                                    <% }
+                                    } %>
+
+                                <% }
+                                } %>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -281,75 +342,67 @@
                         <div class="card card-profile">
                             <div class="card-avatar">
                                 <% if
-                                    (
-                                    user
-                                    .
-                                    getUserStatus
-                                    (
-                                    )
-                                    ==
-                                    UserStatus
-                                    .
-                                    MANAGER
-                                    )
-                                    { %>
+                                (
+                                        user
+                                                .
+                                                        getUserStatus
+                                                                (
+                                                                )
+                                                ==
+                                                UserStatus
+                                                        .
+                                                        MANAGER
+                                ) { %>
                                 <a href="/managerHome">
                                         <% } else { %>
                                     <a href="/userHome">
                                         <% } %>
                                         <% if
-                                            (
-                                            !
-                                            pattern
-                                            .
-                                            matcher
-                                            (
-                                            user
-                                            .
-                                            getProfPicUrl
-                                            (
-                                            )
-                                            )
-                                            .
-                                            matches
-                                            (
-                                            )
-                                            )
-                                            { %>
+                                        (
+                                                !
+                                                        pattern
+                                                                .
+                                                                        matcher
+                                                                                (
+                                                                                        user
+                                                                                                .
+                                                                                                        getProfPicUrl
+                                                                                                                (
+                                                                                                                )
+                                                                                )
+                                                                .
+                                                                        matches
+                                                                                (
+                                                                                )
+                                        ) { %>
                                         <% if
-                                            (
-                                            user
-                                            .
-                                            getGender
-                                            (
-                                            )
-                                            ==
-                                            Gender
-                                            .
-                                            MALE
-                                            )
-                                            { %>
+                                        (
+                                                user
+                                                        .
+                                                                getGender
+                                                                        (
+                                                                        )
+                                                        ==
+                                                        Gender
+                                                                .
+                                                                MALE
+                                        ) { %>
                                         <img class="img" src="/image?path=defMale.png" width="30px" alt="">
-                                        <% }
-                                            else
-                                            if
-                                            (
-                                            user
-                                            .
-                                            getGender
-                                            (
-                                            )
-                                            ==
-                                            Gender
-                                            .
-                                            FEMALE
-                                            )
-                                            { %>
+                                        <% } else if
+                                        (
+                                                user
+                                                        .
+                                                                getGender
+                                                                        (
+                                                                        )
+                                                        ==
+                                                        Gender
+                                                                .
+                                                                FEMALE
+                                        ) { %>
                                         <img class="img" src="/image?path=defFemale.png" width="30px" alt="">
                                         <% }
-                                            }
-                                            else
-                                            { %>
+                                        } else { %>
                                         <img class="img" src="/image?path=<%= user.getProfPicUrl() %>" width="30px"
                                              alt="">
                                         <% } %>
@@ -370,20 +423,20 @@
                                 </form>
                                 <br>
                                 <h6 class="card-category"><%= user
-                                    .
-                                    getUserStatus
-                                    (
-                                    ) %>
+                                        .
+                                                getUserStatus
+                                                        (
+                                                        ) %>
                                 </h6>
                                 <h4 class="card-title"><%= user
-                                    .
-                                    getName
-                                    (
-                                    ) %> <%= user
-                                    .
-                                    getSurname
-                                    (
-                                    ) %>
+                                        .
+                                                getName
+                                                        (
+                                                        ) %> <%= user
+                                        .
+                                                getSurname
+                                                        (
+                                                        ) %>
                                 </h4>
                                 <%--                                <p class="card-description">--%>
                                 <%--                                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...--%>

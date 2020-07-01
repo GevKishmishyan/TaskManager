@@ -1,4 +1,3 @@
-
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%--<html>--%>
 <%--<head>--%>
@@ -181,7 +180,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.regex.Pattern" %>
-<%@ page import="model.*" %><%--
+<%@ page import="model.*" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 29/06/2020
@@ -210,6 +210,22 @@
     List<User> users = (List<User>) request.getAttribute("users");
     List<Task> tasks = (List<Task>) request.getAttribute("searchedList");
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
+    List<Notification> userNots = new ArrayList<>();
+
+    if (user.getUserStatus() == UserStatus.USER) {
+        for (Notification not : nots) {
+            if (!not.getAuthor().equals(user) && not.getTask().getAssignedUser().equals(user)) {
+                userNots.add(not);
+            }
+        }
+    } else {
+        for (Notification not : nots) {
+            if (!not.getAuthor().equals(user)) {
+                userNots.add(not);
+            }
+        }
+    }
+
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
@@ -335,32 +351,71 @@
                     </form>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <% if (user.getUserStatus() == UserStatus.MANAGER) { %>
                             <a class="nav-link" href="/managerHome">
-                                    <% } else { %>
-                                <a class="nav-link" href="/userHome">
-                                    <% } %>
-                                    <i class="material-icons">dashboard</i>
-                                    <p class="d-lg-none d-md-block">
-                                        Stats
-                                    </p>
-                                </a>
+                                <i class="material-icons">dashboard</i>
+                                <p class="d-lg-none d-md-block">
+                                    Stats
+                                </p>
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
-                                <span class="notification">5</span>
+                                <% if (userNots.size() != 0) { %>
+                                <span class="notification"><%= userNots.size() %></span>
+                                <% } else { %>
+                                <span class="notification"></span>
+                                <% } %>
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                                <% if (nots.size() != 0) { %>
+                                <% for (Notification not : userNots) { %>
+
+                                <%
+                                    if (user.getUserStatus() == UserStatus.USER) {
+                                        if (!not.getAuthor().equals(user) && not.getTask().getAssignedUser().equals(user)) { %>
+                                <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                    <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
+                                    </strong>
+                                    &nbsp;
+                                    <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                    assigned you new task:
+                                    <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                    added comment on task:
+                                    <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                    replied to comment on task:
+                                    <% } %>
+                                    &nbsp;
+                                    <strong><%= not.getTask().getName() %>
+                                    </strong>
+                                </a>
+                                <% } %>
+                                <% } else {
+                                    if (!not.getAuthor().equals(user)) { %>
+                                <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                    <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %>
+                                    </strong>
+                                    &nbsp;
+                                    <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                    assigned you new task:
+                                    <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                    added comment on task:
+                                    <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                    replied to comment on task:
+                                    <% } %>
+                                    &nbsp;
+                                    <strong><%= not.getTask().getName() %>
+                                    </strong>
+                                </a>
+                                <% }
+                                } %>
+
+                                <% }
+                                } %>
                             </div>
                         </li>
                         <li class="nav-item">

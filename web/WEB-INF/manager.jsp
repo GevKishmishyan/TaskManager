@@ -2,18 +2,20 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.*" %>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
     <title>Title</title>
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet"/>
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <link href="../assets/demo/demo.css" rel="stylesheet"/>
 </head>
 <body>
 <%
@@ -21,6 +23,12 @@
     List<User> users = (List<User>) request.getAttribute("users");
     List<Task> tasks = (List<Task>) request.getAttribute("tasks");
     List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
+    List<Notification> userNots = new ArrayList<>();
+    for (Notification not : nots) {
+        if (!not.getAuthor().equals(user)){
+            userNots.add(not);
+        }
+    }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
@@ -118,19 +126,38 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
-                                <span class="notification">5</span>
+                                <% if (userNots.size() != 0) { %>
+                                <span class="notification"><%= userNots.size() %></span>
+                                <% } else { %>
+                                <span class="notification"></span>
+                                <% } %>
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                                <% if (nots.size() != 0) { %>
+                                    <% for (Notification not : userNots) { %>
+                                        <% if (!not.getAuthor().equals(user)) { %>
+                                        <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                            <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %></strong>
+                                            &nbsp;
+                                            <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                            assigned you new task:
+                                            <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                            added comment on task:
+                                            <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                            replied to comment on task:
+                                            <% } %>
+                                            &nbsp;
+                                            <strong><%= not.getTask().getName() %></strong>
+                                        </a>
+                                        <% }
+                                    }
+                                }%>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -157,7 +184,8 @@
                             <div class="card-body">
                                 <h4 class="card-title">Daily Sales</h4>
                                 <p class="card-category">
-                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase
+                                    in today sales.</p>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
@@ -351,7 +379,8 @@
                                                 <td>
                                                     <div class="form-check">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   checked>
                                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
@@ -360,10 +389,12 @@
                                                 </td>
                                                 <td>Sign contract for "What are conference organizers afraid of?"</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -381,10 +412,12 @@
                                                 </td>
                                                 <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -400,13 +433,16 @@
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                                                <td>Flooded: One year later, assessing what was lost and what was found
+                                                    when a ravaging rain swept through metro Detroit
                                                 </td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -415,7 +451,8 @@
                                                 <td>
                                                     <div class="form-check">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   checked>
                                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
@@ -424,10 +461,12 @@
                                                 </td>
                                                 <td>Create 4 Invisible User Experiences you Never Knew About</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -442,20 +481,24 @@
                                                 <td>
                                                     <div class="form-check">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   checked>
                                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                                                <td>Flooded: One year later, assessing what was lost and what was found
+                                                    when a ravaging rain swept through metro Detroit
                                                 </td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -473,10 +516,12 @@
                                                 </td>
                                                 <td>Sign contract for "What are conference organizers afraid of?"</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -500,10 +545,12 @@
                                                 </td>
                                                 <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -512,20 +559,24 @@
                                                 <td>
                                                     <div class="form-check">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   checked>
                                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                                                <td>Flooded: One year later, assessing what was lost and what was found
+                                                    when a ravaging rain swept through metro Detroit
                                                 </td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
@@ -534,7 +585,8 @@
                                                 <td>
                                                     <div class="form-check">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   checked>
                                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
@@ -543,10 +595,12 @@
                                                 </td>
                                                 <td>Sign contract for "What are conference organizers afraid of?"</td>
                                                 <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Edit Task"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                    <button type="button" rel="tooltip" title="Remove"
+                                                            class="btn btn-white btn-link btn-sm">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

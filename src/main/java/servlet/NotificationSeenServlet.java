@@ -21,16 +21,16 @@ public class NotificationSeenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
+        String refererStr = req.getHeader("Referer");
+        String[] refSplit = refererStr.split("0/");
+        String referer = "/" + refSplit[1];
+
 
         Notification not = notificationManager.getNotByID(id);
         User user = (User) req.getSession().getAttribute("user");
         try {
             notificationManager.updateNotification(false, not);
-            if (user.getUserStatus() == UserStatus.USER) {
-                resp.sendRedirect("/userHome");
-            } else {
-                resp.sendRedirect("/managerHome");
-            }
+            resp.sendRedirect(referer);
         } catch (SQLException e) {
             e.printStackTrace();
         }

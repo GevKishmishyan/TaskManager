@@ -33,9 +33,6 @@ public class ManagerHomeServlet extends HttpServlet {
             List<Task> allTasks = taskManager.getAllTasks();
             List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
             User user = (User) req.getSession().getAttribute("user");
-            if (user.getUserStatus() != UserStatus.MANAGER){
-                req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
-            }
 
             List<Notification> allNotsByUser = new ArrayList<>();
             for (Task task : allTasks) {
@@ -50,7 +47,6 @@ public class ManagerHomeServlet extends HttpServlet {
             req.setAttribute("allNots", allNotsByUser);
             req.getRequestDispatcher("/WEB-INF/manager.jsp").forward(req, resp);
         } catch (SQLException | ParseException | ServletException | IOException  e) {
-//            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }
     }

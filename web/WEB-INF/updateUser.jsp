@@ -38,7 +38,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.regex.Pattern" %>
-<%@ page import="model.*" %><%--
+<%@ page import="model.*" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 29/06/2020
@@ -98,6 +99,15 @@
 
 <%
     User user = (User) request.getAttribute("user");
+
+    List<Notification> nots = (List<Notification>) request.getAttribute("allNots");
+    List<Notification> userNots = new ArrayList<>();
+    for (Notification not : nots) {
+        if (!not.getAuthor().equals(user)){
+            userNots.add(not);
+        }
+    }
+
     User sessionUser = (User) session.getAttribute("user");
     String regex = "([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)";
     Pattern pattern = Pattern.compile(regex);
@@ -185,19 +195,38 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">notifications</i>
-                                <span class="notification">5</span>
+                                <% if (userNots.size() != 0) { %>
+                                <span class="notification"><%= userNots.size() %></span>
+                                <% } else { %>
+                                <span class="notification"></span>
+                                <% } %>
                                 <p class="d-lg-none d-md-block">
                                     Some Actions
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="javascript:void(0)">Mike John responded to your email</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You have 5 new tasks</a>
-                                <a class="dropdown-item" href="javascript:void(0)">You're now friend with Andrew</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another Notification</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Another One</a>
+                                <% if (nots.size() != 0) { %>
+                                <% for (Notification not : userNots) { %>
+                                <% if (!not.getAuthor().equals(user)) { %>
+                                <a class="dropdown-item" href="/seenNot?id=<%= not.getId() %>">
+                                    <strong><%= not.getAuthor().getName() %>&nbsp;<%= not.getAuthor().getSurname() %></strong>
+                                    &nbsp;
+                                    <% if (not.getNotType() == NotType.NEW_TASK) { %>
+                                    assigned you new task:
+                                    <% } else if (not.getNotType() == NotType.COMMENT) { %>
+                                    added comment on task:
+                                    <% } else if (not.getNotType() == NotType.REPLY) { %>
+                                    replied to comment on task:
+                                    <% } %>
+                                    &nbsp;
+                                    <strong><%= not.getTask().getName() %></strong>
+                                </a>
+                                <% }
+                                }
+                                }%>
                             </div>
                         </li>
                         <li class="nav-item">

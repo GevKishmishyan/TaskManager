@@ -1,7 +1,9 @@
 package servlet;
 
+import manager.NotificationManager;
 import manager.TaskManager;
 import manager.UserManager;
+import model.Notification;
 import model.Task;
 import model.User;
 import model.UserStatus;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,8 @@ public class GetTaskForUpdateServlet extends HttpServlet {
 
     private static final TaskManager taskManager = new TaskManager();
     private static final UserManager userManager = new UserManager();
+    private static final NotificationManager notificationManager = new NotificationManager();
+
 
     private static Map<String, String> getQueryMap(String query) {
         String[] params = query.split("&");
@@ -48,12 +54,21 @@ public class GetTaskForUpdateServlet extends HttpServlet {
         List<User> allUsers = null;
         try {
             allUsers = userManager.getAllUsers();
+            List<Task> allTasks = taskManager.getAllTasks();
+            List<Notification> allNotsByUser = new ArrayList<>();
+            for (Task perTask : allTasks) {
+                List<Notification> notShowedNotsByTaskId = notificationManager.getAllNotShowedNotsByTaskId((int) perTask.getId());
+                if (notShowedNotsByTaskId != null) {
+                    allNotsByUser.addAll(notShowedNotsByTaskId);
+                }
+            }
+            req.setAttribute("allNots", allNotsByUser);
             List<User> allUsersByStatus = userManager.getAllUsersByStatus(UserStatus.USER);
             req.setAttribute("users", allUsers);
             req.setAttribute("task", task);
             req.setAttribute("usersByStatus", allUsersByStatus);
             req.getRequestDispatcher("/WEB-INF/updateTask.jsp").forward(req, resp);
-        } catch (SQLException | ServletException | IOException e) {
+        } catch (SQLException | ServletException | IOException | ParseException e) {
 //            req.getRequestDispatcher("/WEB-INF/errorHandler.jsp");
             e.printStackTrace();
         }

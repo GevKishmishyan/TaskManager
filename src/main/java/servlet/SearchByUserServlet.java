@@ -1,6 +1,8 @@
 package servlet;
 
+import manager.NotificationManager;
 import manager.TaskManager;
+import model.Notification;
 import model.Task;
 import model.User;
 import model.UserStatus;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/search")
@@ -20,6 +23,7 @@ public class SearchByUserServlet extends HttpServlet {
 
 
     private static final TaskManager taskManager = new TaskManager();
+    private static final NotificationManager notificationManager = new NotificationManager();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -27,13 +31,35 @@ public class SearchByUserServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         long id = user.getId();
         try {
+            List<Task> allTasks = taskManager.getAllTasks();
+            List<Task> allTasksByUser = taskManager.getAllTasksByUser(user);
+            List<Task> tasksIfContains;
             if (user.getUserStatus() == UserStatus.MANAGER) {
-                List<Task> tasksIfContains = taskManager.getTasksIfContains(search);
+                tasksIfContains = taskManager.getTasksIfContains(search);
                 req.setAttribute("searchedList", tasksIfContains);
             } else {
-                List<Task> tasksIfContains = taskManager.getTasksByUserIfContains(search, id);
+                tasksIfContains = taskManager.getTasksByUserIfContains(search, id);
                 req.setAttribute("searchedList", tasksIfContains);
             }
+
+            List<Notification> allNotsByUser = new ArrayList<>();
+            if (user.getUserStatus() == UserStatus.MANAGER) {
+                for (Task task : allTasks) {
+                    List<Notification> notShowedNotsByTaskId = notificationManager.getAllNotShowedNotsByTaskId((int) task.getId());
+                    if (notShowedNotsByTaskId != null) {
+                        allNotsByUser.addAll(notShowedNotsByTaskId);
+                    }
+                }
+            } else {
+                for (Task task : allTasksByUser) {
+                    List<Notification> notShowedNotsByTaskId = notificationManager.getAllNotShowedNotsByTaskId((int) task.getId());
+                    if (notShowedNotsByTaskId != null) {
+                        allNotsByUser.addAll(notShowedNotsByTaskId);
+                    }
+                }
+            }
+            req.setAttribute("allNots", allNotsByUser);
+
             req.setAttribute("searchedWord", search);
             req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
 
