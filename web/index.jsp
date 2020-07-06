@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js" type="text/javascript"></script>
 </head>
 <body>
-
+    <div class="valod></div>
 <%
     String msg = "";
     if (session.getAttribute("message") != null) {
