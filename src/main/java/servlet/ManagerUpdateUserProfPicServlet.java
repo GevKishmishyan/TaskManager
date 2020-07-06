@@ -21,7 +21,7 @@ import java.sql.SQLException;
 public class ManagerUpdateUserProfPicServlet extends HttpServlet {
 
     private static final UserManager userManager = new UserManager();
-    private static final String UPLOAD_DIR = "E:\\Projects\\TaskManager\\uploads\\profilePics";
+    private static final String UPLOAD_DIR = "E:\\uploads\\profilePics";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
