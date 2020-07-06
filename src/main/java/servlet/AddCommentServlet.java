@@ -17,6 +17,7 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/addComment")
 public class AddCommentServlet extends HttpServlet {
 
+    //task manager
     private static final TaskManager taskManager = new TaskManager();
     private static final CommentManager commentManager = new CommentManager();
     private static final NotificationManager notificationManager = new NotificationManager();
